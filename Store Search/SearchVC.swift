@@ -12,17 +12,21 @@ class SearchViewController: UIViewController {
         static let searchResultCell = "searchResultCell"
         static let nothingCell = "nothingCell"
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    
+    private func setupSearchCell(){
         var nib = UINib(nibName: "SearchResultCell", bundle: nil)
         tvResult.register(nib, forCellReuseIdentifier: TableViewCellIdentifier.searchResultCell)
         tvResult.rowHeight = 80
         
         nib = UINib(nibName: "NothingCell", bundle: nil)
         tvResult.register(nib, forCellReuseIdentifier: TableViewCellIdentifier.nothingCell)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
+        sbSearch.becomeFirstResponder()
+        setupSearchCell()
     }
     
 
@@ -31,12 +35,9 @@ class SearchViewController: UIViewController {
 extension SearchViewController:UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.resignFirstResponder()
-        
         searchResults = []
         hasSearched = true
-        
         if searchBar.text! != "Fabled"{
             for index in 0...5{
                 guard let text = searchBar.text else {return}
@@ -48,7 +49,6 @@ extension SearchViewController:UISearchBarDelegate{
                 }
             }
         }
-        
         tvResult.reloadData()
     }
     

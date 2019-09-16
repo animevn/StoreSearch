@@ -28,7 +28,6 @@
                             </tableView>
                             <searchBar contentMode="redraw" placeholder="Enter search text here ..." translatesAutoresizingMaskIntoConstraints="NO" id="hcT-zE-Jq1">
                                 <rect key="frame" x="0.0" y="20" width="320" height="56"/>
-                                <color key="barTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="WGx-ng-8B0"/>
