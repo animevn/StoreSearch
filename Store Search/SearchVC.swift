@@ -7,9 +7,22 @@ class SearchViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     private var hasSearched = false
+    
+    struct TableViewCellIdentifier{
+        static let searchResultCell = "searchResultCell"
+        static let nothingCell = "nothingCell"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var nib = UINib(nibName: "SearchResultCell", bundle: nil)
+        tvResult.register(nib, forCellReuseIdentifier: TableViewCellIdentifier.searchResultCell)
+        tvResult.rowHeight = 80
+        
+        nib = UINib(nibName: "NothingCell", bundle: nil)
+        tvResult.register(nib, forCellReuseIdentifier: TableViewCellIdentifier.nothingCell)
+        
     }
     
 
@@ -60,21 +73,21 @@ extension SearchViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let identifier = "searchResultCell"
-        var cell:UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: identifier)
-        if cell == nil{
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: identifier)
-        }
+        
         
         if searchResults.count == 0{
-            cell.textLabel!.text = "Nothing found"
-            cell.detailTextLabel!.text = ""
+            let identifier = TableViewCellIdentifier.nothingCell
+            return tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         }else{
+            let identifier = TableViewCellIdentifier.searchResultCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
+                                                     for: indexPath) as! SearchResultCell
             let searchResult = searchResults[indexPath.row]
-            cell.textLabel?.text = searchResult.name
-            cell.detailTextLabel!.text = searchResult.artistName
+            cell.lbName.text = searchResult.name
+            cell.lbArtistName.text = searchResult.artistName
+            return cell
         }
-        return cell
+        
     }
     
 }
