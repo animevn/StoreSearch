@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F1029506232F58610085A335 /* NothingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1029505232F58610085A335 /* NothingCell.xib */; };
+		F104CFE9232FECAA003A2CF2 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */; };
 		F18C76A1232F273500B01A9E /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C76A0232F273500B01A9E /* SearchResult.swift */; };
 		F18C76A3232F495000B01A9E /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F18C76A2232F495000B01A9E /* SearchResultCell.xib */; };
 		F18C76A5232F4DAE00B01A9E /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		F1029505232F58610085A335 /* NothingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingCell.xib; sourceTree = "<group>"; };
+		F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		F18C76A0232F273500B01A9E /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		F18C76A2232F495000B01A9E /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */,
 				F18C76A2232F495000B01A9E /* SearchResultCell.xib */,
 				F1029505232F58610085A335 /* NothingCell.xib */,
+				F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */,
 				F18C76A0232F273500B01A9E /* SearchResult.swift */,
 				F1C2754F232EFC51005F7387 /* Main.storyboard */,
 				F1C27554232EFC52005F7387 /* Launch.storyboard */,
@@ -136,6 +139,7 @@
 			files = (
 				F1C27556232EFC52005F7387 /* Launch.storyboard in Resources */,
 				F1C27553232EFC52005F7387 /* Assets.xcassets in Resources */,
+				F104CFE9232FECAA003A2CF2 /* LoadingCell.xib in Resources */,
 				F1029506232F58610085A335 /* NothingCell.xib in Resources */,
 				F18C76A3232F495000B01A9E /* SearchResultCell.xib in Resources */,
 				F1C27551232EFC51005F7387 /* Main.storyboard in Resources */,
