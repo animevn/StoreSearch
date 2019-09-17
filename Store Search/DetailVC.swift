@@ -8,11 +8,68 @@ class DetailViewController:UIViewController{
     @IBOutlet weak var lbArtist: UILabel!
     @IBOutlet weak var lbKind: UILabel!
     @IBOutlet weak var lbGenre: UILabel!
+    @IBOutlet weak var bnPrice: UIButton!
+    
+    var searchResult:SearchResult!
+    var downloadTask:URLSessionDownloadTask?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         modalPresentationStyle = .custom
         transitioningDelegate = self
+    }
+    
+    deinit {
+        downloadTask?.cancel()
+    }
+    
+    private func kindForDisplay(kind: String)->String{
+        switch kind{
+        case "album": return "Album"
+        case "audiobook": return "Audio Book"
+        case "book": return "Book"
+        case "ebook": return "E-Book"
+        case "feature-movie": return "Movie"
+        case "music-video": return "Music Video"
+        case "podcast": return "Podcast"
+        case "software": return "App"
+        case "song": return "Song"
+        case "tv-episode": return "TV Episode"
+        default: return kind
+        }
+    }
+    
+    private func updatePrice(){
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = searchResult.currency
+        
+        let priceText:String
+        if searchResult.price == 0{
+            priceText = "Free"
+        }else if let text = formatter.string(from: searchResult.price as NSNumber){
+            priceText = text
+        }else{
+            priceText = ""
+        }
+        bnPrice.setTitle(priceText, for: .normal)
+    }
+    
+    private func updateViews(){
+        
+        lbName.text = searchResult.name
+        if searchResult.artistName.isEmpty{
+            lbArtist.text = "Unknown"
+        }else{
+            lbArtist.text = searchResult.artistName
+        }
+        lbKind.text = kindForDisplay(kind: searchResult.kind)
+        lbGenre.text = searchResult.genre
+        
+        if let largeUrl = URL(string: searchResult.artworkLargeUrl){
+            downloadTask = ivImage.loadImage(url: largeUrl)
+        }
     }
     
     override func viewDidLoad() {
@@ -23,12 +80,23 @@ class DetailViewController:UIViewController{
         gestureRecognizer.cancelsTouchesInView = false
         gestureRecognizer.delegate = self
         view.addGestureRecognizer(gestureRecognizer)
+        
+        if searchResult != nil{
+            updateViews()
+            updatePrice()
+        }
     }
     
     @IBAction func onClose(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func onOpen(_ sender: UIButton) {
+        if let url = URL(string: searchResult.storeUrl){
+            print(url)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
 }
 
 extension DetailViewController:UIGestureRecognizerDelegate{

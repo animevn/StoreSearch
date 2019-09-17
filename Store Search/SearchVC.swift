@@ -316,6 +316,15 @@ extension SearchViewController:UITableViewDelegate{
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail"{
+            let destination = segue.destination as! DetailViewController
+            let indexPath = sender as! IndexPath
+            let searchResult = searchResults[indexPath.row]
+            destination.searchResult = searchResult
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
