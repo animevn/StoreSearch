@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sag-zV-CQU">
-                                <rect key="frame" x="0.0" y="76" width="320" height="492"/>
+                                <rect key="frame" x="0.0" y="104" width="320" height="464"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="Pat-OE-svY"/>
@@ -33,26 +33,43 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="WGx-ng-8B0"/>
                                 </connections>
                             </searchBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CWH-Eo-GQN">
+                                <rect key="frame" x="-5" y="76" width="330" height="29"/>
+                                <segments>
+                                    <segment title="All"/>
+                                    <segment title="Music"/>
+                                    <segment title="App"/>
+                                    <segment title="Ebook"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onSegmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="rBM-lX-sVq"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="CWH-Eo-GQN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="-5" id="0Cn-7u-AS6"/>
+                            <constraint firstItem="Sag-zV-CQU" firstAttribute="top" secondItem="CWH-Eo-GQN" secondAttribute="bottom" id="A21-BD-r7w"/>
                             <constraint firstItem="hcT-zE-Jq1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AC1-WB-LPV"/>
+                            <constraint firstItem="CWH-Eo-GQN" firstAttribute="top" secondItem="hcT-zE-Jq1" secondAttribute="bottom" id="Iyn-Ly-ROQ"/>
                             <constraint firstItem="Sag-zV-CQU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="KF1-a8-hPH"/>
                             <constraint firstItem="Sag-zV-CQU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="O8x-P9-0bX"/>
                             <constraint firstItem="hcT-zE-Jq1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WZd-7d-Pkl"/>
                             <constraint firstItem="Sag-zV-CQU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lKG-aH-3JP"/>
+                            <constraint firstAttribute="trailing" secondItem="CWH-Eo-GQN" secondAttribute="trailing" constant="-5" id="pv3-wG-sB5"/>
                             <constraint firstItem="hcT-zE-Jq1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="tfY-J0-SLY"/>
-                            <constraint firstItem="Sag-zV-CQU" firstAttribute="top" secondItem="hcT-zE-Jq1" secondAttribute="bottom" id="z9I-jW-kuc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="sbSearch" destination="hcT-zE-Jq1" id="53z-Fi-yYS"/>
+                        <outlet property="scTitles" destination="CWH-Eo-GQN" id="Ext-Dv-lwC"/>
                         <outlet property="tvResult" destination="Sag-zV-CQU" id="u3F-Xg-ZUh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="46.875" y="30.633802816901408"/>
         </scene>
     </scenes>
 </document>

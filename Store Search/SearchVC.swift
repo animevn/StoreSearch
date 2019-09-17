@@ -4,10 +4,12 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var sbSearch: UISearchBar!
     @IBOutlet weak var tvResult: UITableView!
+    @IBOutlet weak var scTitles: UISegmentedControl!
     
     var searchResults = [SearchResult]()
     private var hasSearched = false
     private var isLoading = false
+    private var dataTask:URLSessionDataTask?
     
     struct TableViewCellIdentifier{
         static let searchResultCell = "searchResultCell"
@@ -16,6 +18,8 @@ class SearchViewController: UIViewController {
     }
     
     private func setupSearchCell(){
+//        tvResult.layer.borderColor = UIColor.lightGray.cgColor
+//        tvResult.layer.borderWidth = 0.5
         var nib = UINib(nibName: "SearchResultCell", bundle: nil)
         tvResult.register(nib, forCellReuseIdentifier: TableViewCellIdentifier.searchResultCell)
         tvResult.rowHeight = 80
@@ -30,6 +34,11 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
+        scTitles.tintColor = tintColor
+//        scTitles.layer.cornerRadius = 0
+//        scTitles.layer.borderColor = tintColor.cgColor
+//        scTitles.layer.borderWidth = 0.1
         sbSearch.becomeFirstResponder()
         setupSearchCell()
     }
@@ -51,9 +60,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private func parseJson(json:String)->[String:Any]?{
-        guard let data = json.data(using: .utf8, allowLossyConversion: false) else {return nil}
-        
+    private func parseJson(data:Data)->[String:Any]?{
         do{
             return try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any]
         }catch let error{
@@ -193,42 +200,73 @@ class SearchViewController: UIViewController {
         }
         return searchResults
     }
-
+    
+   
+    
+    
 }
 
 extension SearchViewController:UISearchBarDelegate{
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !searchBar.text!.isEmpty{
-            searchBar.resignFirstResponder()
-            
-            searchResults = []
-            isLoading = true
-            tvResult.reloadData()
-            hasSearched = true
-            let text = searchBar.text!
-            
-            DispatchQueue.global().async {
-                let url = self.iTunesUrl(searchText: text)
-                if let jsonString = self.performStoreRequest(with: url){
-                    if let jsonDictionary = self.parseJson(json: jsonString){
-                        self.searchResults = self.parseDict(dict: jsonDictionary)
-                        self.searchResults.sort(by: <)
-                        
-                        DispatchQueue.main.async {
-                            self.isLoading = false
-                            self.tvResult.reloadData()
-                        }
-                        return
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.showNetworkError()
-                }
-            }
-            
+    private func prepareSearch(){
+        sbSearch.resignFirstResponder()
+        dataTask?.cancel()
+        searchResults = []
+        isLoading = true
+        tvResult.reloadData()
+        hasSearched = true
+    }
+    
+    private func showAlertIfSearchWrong(){
+        DispatchQueue.main.async {
+            self.hasSearched = false
+            self.isLoading = false
+            self.tvResult.reloadData()
+            self.showNetworkError()
         }
     }
+    
+    private func getResultFromSearchText(){
+        let url = self.iTunesUrl(searchText: sbSearch.text!)
+        let session = URLSession.shared
+        self.dataTask = session.dataTask(with: url, completionHandler: {
+            data, response, error in
+            if let error = error as NSError?, error.code == -999{
+                return
+            }else if let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200{
+                if let data = data, let jsonDictionary = self.parseJson(data: data){
+                    self.searchResults = self.parseDict(dict: jsonDictionary)
+                    self.searchResults.sort(by: <)
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.tvResult.reloadData()
+                    }
+                    return
+                }
+            }else{
+                print("Error reading")
+            }
+            self.showAlertIfSearchWrong()
+        })
+        self.dataTask?.resume()
+    }
+    
+    private func performeSearch(){
+        if !sbSearch.text!.isEmpty{
+            prepareSearch()
+            getResultFromSearchText()
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+       performeSearch()
+    }
+    
+    @IBAction func onSegmentChanged(_ sender: UISegmentedControl) {
+        performeSearch()
+    }
+    
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
         return .topAttached
