@@ -6,6 +6,8 @@ class SearchResultCell:UITableViewCell{
     @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var lbArtistName: UILabel!
     
+    var downloadTask:URLSessionDownloadTask?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -38,5 +40,16 @@ class SearchResultCell:UITableViewCell{
             lbArtistName.text = String(format:"%@ (%@)", searchResult.artistName,
                                        kindForDisplay(kind: searchResult.kind))
         }
+        ivImage.image = UIImage(named: "Placeholder")
+        if let smallUrl = URL(string: searchResult.artworkSmallUrl){
+            downloadTask = ivImage.loadImage(url: smallUrl)
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        downloadTask?.cancel()
+        downloadTask = nil
     }
 }
