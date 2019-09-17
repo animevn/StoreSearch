@@ -13,6 +13,8 @@
 		F18C76A3232F495000B01A9E /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F18C76A2232F495000B01A9E /* SearchResultCell.xib */; };
 		F18C76A5232F4DAE00B01A9E /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */; };
 		F18D1AF22330C14000581932 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18D1AF12330C14000581932 /* Repo.swift */; };
+		F197E43F23310EF400DCBCF5 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197E43E23310EF400DCBCF5 /* DetailVC.swift */; };
+		F197E4412331186800DCBCF5 /* DimmingPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F197E4402331186800DCBCF5 /* DimmingPC.swift */; };
 		F1C2754C232EFC51005F7387 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C2754B232EFC51005F7387 /* AppDelegate.swift */; };
 		F1C2754E232EFC51005F7387 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C2754D232EFC51005F7387 /* SearchVC.swift */; };
 		F1C27551232EFC51005F7387 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1C2754F232EFC51005F7387 /* Main.storyboard */; };
@@ -27,6 +29,8 @@
 		F18C76A2232F495000B01A9E /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		F18D1AF12330C14000581932 /* Repo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
+		F197E43E23310EF400DCBCF5 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		F197E4402331186800DCBCF5 /* DimmingPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPC.swift; sourceTree = "<group>"; };
 		F1C27548232EFC51005F7387 /* Store Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Store Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1C2754B232EFC51005F7387 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1C2754D232EFC51005F7387 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -68,6 +72,8 @@
 			children = (
 				F1C2754B232EFC51005F7387 /* AppDelegate.swift */,
 				F1C2754D232EFC51005F7387 /* SearchVC.swift */,
+				F197E43E23310EF400DCBCF5 /* DetailVC.swift */,
+				F197E4402331186800DCBCF5 /* DimmingPC.swift */,
 				F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */,
 				F18C76A2232F495000B01A9E /* SearchResultCell.xib */,
 				F1029505232F58610085A335 /* NothingCell.xib */,
@@ -160,7 +166,9 @@
 				F18C76A1232F273500B01A9E /* SearchResult.swift in Sources */,
 				F18D1AF22330C14000581932 /* Repo.swift in Sources */,
 				F18C76A5232F4DAE00B01A9E /* SearchResultCell.swift in Sources */,
+				F197E4412331186800DCBCF5 /* DimmingPC.swift in Sources */,
 				F1C2754C232EFC51005F7387 /* AppDelegate.swift in Sources */,
+				F197E43F23310EF400DCBCF5 /* DetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
