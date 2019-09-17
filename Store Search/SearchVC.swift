@@ -43,10 +43,18 @@ class SearchViewController: UIViewController {
         setupSearchCell()
     }
     
-    private func iTunesUrl(searchText:String) -> URL{
+    private func iTunesUrl(searchText:String, category:Int) -> URL{
+        let categoryName:String
+        switch category{
+        case 1: categoryName = "musicTrack"
+        case 2: categoryName = "software"
+        case 3: categoryName = "ebook"
+        default: categoryName = ""
+        }
         let escapedSearchText = searchText
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        let urlString = String(format:"https://itunes.apple.com/search?term=%@", escapedSearchText)
+        let urlString = String(format:"https://itunes.apple.com/search?term=%@&limit=200&entity=%@",
+                               escapedSearchText, categoryName)
         let url = URL(string: urlString)
         return url!
     }
@@ -80,21 +88,7 @@ class SearchViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func kindForDisplay(kind: String)->String{
-        switch kind{
-        case "album": return "Album"
-        case "audiobook": return "Audio Book"
-        case "book": return "Book"
-        case "ebook": return "E-Book"
-        case "feature-movie": return "Movie"
-        case "music-video": return "Music Video"
-        case "podcast": return "Podcast"
-        case "software": return "App"
-        case "song": return "Song"
-        case "tv-episode": return "TV Episode"
-        default: return kind
-        }
-    }
+    
     
     private func parseTrackToSearchResult(dict:[String:Any])->SearchResult{
         let searchResult = SearchResult()
@@ -102,7 +96,7 @@ class SearchViewController: UIViewController {
         searchResult.artistName = dict["artistName"] as! String
         searchResult.artworkSmallUrl = dict["artworkUrl60"] as! String
         searchResult.artworkLargeUrl = dict["artworkUrl100"] as! String
-        searchResult.kind = kindForDisplay(kind: dict["kind"] as! String)
+        searchResult.kind = dict["kind"] as! String
         searchResult.storeUrl = dict["trackViewUrl"] as! String
         searchResult.currency = dict["currency"] as! String
         if let price = dict["trackPrice"] as? Double{
@@ -192,6 +186,8 @@ class SearchViewController: UIViewController {
                     default:
                         break
                     }
+                }else if let kind = resultDict["kind"] as? String, kind == "ebook"{
+                    searchResult = parseEbookToSearchResult(dict: resultDict)
                 }
             }
             if let result = searchResult{
@@ -200,10 +196,6 @@ class SearchViewController: UIViewController {
         }
         return searchResults
     }
-    
-   
-    
-    
 }
 
 extension SearchViewController:UISearchBarDelegate{
@@ -227,7 +219,7 @@ extension SearchViewController:UISearchBarDelegate{
     }
     
     private func getResultFromSearchText(){
-        let url = self.iTunesUrl(searchText: sbSearch.text!)
+        let url = self.iTunesUrl(searchText:sbSearch.text!, category:scTitles.selectedSegmentIndex)
         let session = URLSession.shared
         self.dataTask = session.dataTask(with: url, completionHandler: {
             data, response, error in
@@ -306,13 +298,7 @@ extension SearchViewController:UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
                                                      for: indexPath) as! SearchResultCell
             let searchResult = searchResults[indexPath.row]
-            cell.lbName.text = searchResult.name
-            if searchResult.artistName.isEmpty{
-                cell.lbArtistName.text = "Unknown"
-            }else{
-                cell.lbArtistName.text = String(format: "%@ (%@)",
-                                                searchResult.artistName, searchResult.kind)
-            }
+            cell.configureCell(searchResult: searchResult)
             return cell
         }
         
