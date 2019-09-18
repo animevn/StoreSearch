@@ -209,20 +209,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Landscape" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujd-tq-z6i">
-                                <rect key="frame" x="239.5" y="149" width="89" height="22"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Psr-pi-FL6">
+                                <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-UU-Abb">
+                                <rect key="frame" x="20" y="20" width="39" height="37"/>
+                            </pageControl>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ujd-tq-z6i" firstAttribute="centerX" secondItem="HMx-Tb-Bzf" secondAttribute="centerX" id="2QG-ku-nCD"/>
-                            <constraint firstItem="ujd-tq-z6i" firstAttribute="centerY" secondItem="HMx-Tb-Bzf" secondAttribute="centerY" id="GFu-UW-0YL"/>
+                            <constraint firstItem="UF4-UU-Abb" firstAttribute="leading" secondItem="HMx-Tb-Bzf" secondAttribute="leading" constant="20" id="7qf-bN-C7l"/>
+                            <constraint firstItem="UF4-UU-Abb" firstAttribute="top" secondItem="HMx-Tb-Bzf" secondAttribute="top" constant="20" id="9Km-WQ-l99"/>
+                            <constraint firstItem="HMx-Tb-Bzf" firstAttribute="trailing" secondItem="Psr-pi-FL6" secondAttribute="trailing" id="FCI-h2-FaN"/>
+                            <constraint firstItem="Psr-pi-FL6" firstAttribute="leading" secondItem="HMx-Tb-Bzf" secondAttribute="leading" id="FQM-jV-fC6"/>
+                            <constraint firstItem="Psr-pi-FL6" firstAttribute="top" secondItem="HMx-Tb-Bzf" secondAttribute="top" id="hE4-kt-6K2"/>
+                            <constraint firstItem="HMx-Tb-Bzf" firstAttribute="bottom" secondItem="Psr-pi-FL6" secondAttribute="bottom" id="tDB-tO-RuI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HMx-Tb-Bzf"/>
                     </view>
+                    <connections>
+                        <outlet property="pgLandscape" destination="UF4-UU-Abb" id="Wqt-bk-yKl"/>
+                        <outlet property="svLandscape" destination="Psr-pi-FL6" id="6Kc-mO-nfP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDZ-2V-tok" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

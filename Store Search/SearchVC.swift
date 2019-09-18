@@ -342,6 +342,7 @@ extension SearchViewController{
             withIdentifier: "landscapeViewController") as? LandscapeViewController
         if let controller = landScape{
             controller.view.frame = view.bounds
+            controller.searchResults = searchResults
             view.addSubview(controller.view)
             addChild(controller)
             
