@@ -52,8 +52,8 @@ extension SearchViewController:UISearchBarDelegate{
     }
     
     private func performeSearch(){
-        
-        search.performeSearch(text: sbSearch.text!, category: scTitles.selectedSegmentIndex){
+        tvResult.reloadData()
+        search.performeSearch(text:sbSearch.text!, category:scTitles.selectedSegmentIndex){
             if !$0{
                 self.showNetworkError()
             }
@@ -98,8 +98,7 @@ extension SearchViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch search.state{
-        case .notSearchedYet:
-            fatalError("Something very wrong")
+        
         case .loading:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: TableViewCellIdentifier.loadingCell, for: indexPath)
@@ -115,6 +114,12 @@ extension SearchViewController:UITableViewDataSource{
                                                      for: indexPath) as! SearchResultCell
             let searchResult = list[indexPath.row]
             cell.configureCell(searchResult: searchResult)
+            return cell
+        default:
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: TableViewCellIdentifier.loadingCell, for: indexPath)
+            let spinner = cell.viewWithTag(99) as! UIActivityIndicatorView
+            spinner.startAnimating()
             return cell
         }
     }
@@ -158,14 +163,19 @@ extension SearchViewController{
         landScape = storyboard!.instantiateViewController(
             withIdentifier: "landscapeViewController") as? LandscapeViewController
         if let controller = landScape{
-            controller.view.frame = view.bounds
             controller.search = search
+            
+            controller.view.frame = view.bounds
+            controller.view.alpha = 0
+            
             view.addSubview(controller.view)
             addChild(controller)
             
             coordinator.animate(alongsideTransition: {_ in
+                
                 controller.view.alpha = 1
                 self.sbSearch.resignFirstResponder()
+                
                 if self.presentedViewController != nil{
                     self.dismiss(animated: true, completion: nil)
                 }
@@ -198,7 +208,7 @@ extension SearchViewController{
         case .compact: showLandscape(coordinator: coordinator)
         case .regular, .unspecified: hideLandscape(coordinator: coordinator)
         @unknown default:
-            fatalError("Error")
+            break
         }
     }
     
