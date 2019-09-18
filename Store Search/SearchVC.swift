@@ -344,16 +344,30 @@ extension SearchViewController{
             controller.view.frame = view.bounds
             view.addSubview(controller.view)
             addChild(controller)
-            controller.didMove(toParent: self)
+            
+            coordinator.animate(alongsideTransition: {_ in
+                controller.view.alpha = 1
+                self.sbSearch.resignFirstResponder()
+                if self.presentedViewController != nil{
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }, completion: {_ in
+                controller.didMove(toParent: self)
+            })
+           
         }
     }
     
     private func hideLandscape(coordinator: UIViewControllerTransitionCoordinator){
         if let controller = landScape{
             controller.willMove(toParent: nil)
-            controller.view.removeFromSuperview()
-            controller.removeFromParent()
-            landScape = nil
+            coordinator.animate(alongsideTransition: {_ in
+                controller.view.alpha = 0
+            }, completion: {_ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParent()
+                self.landScape = nil
+            })
         }
     }
     
