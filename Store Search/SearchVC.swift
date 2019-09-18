@@ -6,10 +6,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tvResult: UITableView!
     @IBOutlet weak var scTitles: UISegmentedControl!
     
+    var landScape:LandscapeViewController?
     var searchResults = [SearchResult]()
     private var hasSearched = false
     private var isLoading = false
     private var dataTask:URLSessionDataTask?
+    
     
     struct TableViewCellIdentifier{
         static let searchResultCell = "searchResultCell"
@@ -328,6 +330,42 @@ extension SearchViewController:UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "showDetail", sender: indexPath)
+    }
+    
+}
+
+extension SearchViewController{
+    
+    private func showLandscape(coordinator: UIViewControllerTransitionCoordinator){
+        guard landScape == nil else {return}
+        landScape = storyboard!.instantiateViewController(
+            withIdentifier: "landscapeViewController") as? LandscapeViewController
+        if let controller = landScape{
+            controller.view.frame = view.bounds
+            view.addSubview(controller.view)
+            addChild(controller)
+            controller.didMove(toParent: self)
+        }
+    }
+    
+    private func hideLandscape(coordinator: UIViewControllerTransitionCoordinator){
+        if let controller = landScape{
+            controller.willMove(toParent: nil)
+            controller.view.removeFromSuperview()
+            controller.removeFromParent()
+            landScape = nil
+        }
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection,
+                                 with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        switch newCollection.verticalSizeClass{
+        case .compact: showLandscape(coordinator: coordinator)
+        case .regular, .unspecified: hideLandscape(coordinator: coordinator)
+        @unknown default:
+            fatalError("Error")
+        }
     }
     
 }

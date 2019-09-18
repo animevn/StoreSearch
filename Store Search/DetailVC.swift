@@ -74,6 +74,7 @@ class DetailViewController:UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .clear
         lbPopup.layer.cornerRadius = 15
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onClose))
@@ -114,5 +115,11 @@ extension DetailViewController:UIViewControllerTransitioningDelegate{
                                 source: UIViewController) -> UIPresentationController? {
         return DimmingPresentationController(presentedViewController: presented,
                                              presenting: presenting)
+    }
+    
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController)->UIViewControllerAnimatedTransitioning?{
+        return BounceAnimViewController()
     }
 }
