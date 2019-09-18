@@ -51,21 +51,13 @@ extension SearchViewController:UISearchBarDelegate{
         present(alert, animated: true, completion: nil)
     }
     
-    private func showAlertIfSearchWrong(){
-        DispatchQueue.main.async {
-            self.search.hasSearched = false
-            self.search.isLoading = false
-            self.tvResult.reloadData()
-            self.showNetworkError()
-        }
-    }
-    
     private func performeSearch(){
         
         search.performeSearch(text: sbSearch.text!, category: scTitles.selectedSegmentIndex){
             if !$0{
                 self.showNetworkError()
             }
+            self.landScape?.searchResultReceived()
             self.tvResult.reloadData()
         }
         tvResult.reloadData()
@@ -91,34 +83,37 @@ extension SearchViewController:UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if search.isLoading{
-            return 1
-        }else if !search.hasSearched{
+        switch search.state{
+        case .notSearchedYet:
             return 0
-        }else if search.searchResults.count == 0{
+        case .loading:
             return 1
-        }else {
-            return search.searchResults.count
+        case .noResults:
+            return 1
+        case .results(let list):
+            return list.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if search.isLoading{
+        switch search.state{
+        case .notSearchedYet:
+            fatalError("Something very wrong")
+        case .loading:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: TableViewCellIdentifier.loadingCell, for: indexPath)
             let spinner = cell.viewWithTag(99) as! UIActivityIndicatorView
             spinner.startAnimating()
             return cell
-            
-        }else if search.searchResults.count == 0{
+        case .noResults:
             let identifier = TableViewCellIdentifier.nothingCell
             return tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        }else{
+        case .results(let list):
             let identifier = TableViewCellIdentifier.searchResultCell
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier,
                                                      for: indexPath) as! SearchResultCell
-            let searchResult = search.searchResults[indexPath.row]
+            let searchResult = list[indexPath.row]
             cell.configureCell(searchResult: searchResult)
             return cell
         }
@@ -128,19 +123,24 @@ extension SearchViewController:UITableViewDataSource{
 extension SearchViewController:UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if search.searchResults.count == 0 || search.isLoading{
-            return nil
-        }else{
+        
+        switch search.state{
+        case .results:
             return indexPath
+        case .noResults, .notSearchedYet, .loading:
+            return nil
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "showDetail"{
-            let destination = segue.destination as! DetailViewController
-            let indexPath = sender as! IndexPath
-            let searchResult = search.searchResults[indexPath.row]
-            destination.searchResult = searchResult
+            if case .results(let list) = search.state{
+                let destination = segue.destination as! DetailViewController
+                let indexPath = sender as! IndexPath
+                let searchResult = list[indexPath.row]
+                destination.searchResult = searchResult
+            }
         }
     }
     
@@ -180,6 +180,9 @@ extension SearchViewController{
             controller.willMove(toParent: nil)
             coordinator.animate(alongsideTransition: {_ in
                 controller.view.alpha = 0
+                if self.presentedViewController != nil{
+                    self.dismiss(animated: true, completion: nil)
+                }
             }, completion: {_ in
                 controller.view.removeFromSuperview()
                 controller.removeFromParent()

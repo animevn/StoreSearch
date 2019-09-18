@@ -1,15 +1,20 @@
 import Foundation
+import UIKit
 
 class Search{
     
-    var searchResults = [SearchResult]()
-    var hasSearched = false
-    var isLoading = false
     var dataTask:URLSessionDataTask? = nil
     typealias SearchComplete = (Bool)->Void
     
+    private(set) var state:State = .notSearchedYet
     private let stringUrl = "https://itunes.apple.com/search?term=%@&limit=200&entity=%@"
     
+    enum State{
+        case notSearchedYet
+        case loading
+        case noResults
+        case results([SearchResult])
+    }
    
     
     private func iTunesUrl(searchText:String, category:Int) -> URL{
@@ -117,7 +122,7 @@ class Search{
         
         guard let array = dict["results"] as? [Any] else {return []}
         
-        searchResults = []
+        var searchResults = [SearchResult]()
         for item in array{
             
             var searchResult:SearchResult?
@@ -144,39 +149,37 @@ class Search{
         return searchResults
     }
     
-    private func prepareSearch(){
-        dataTask?.cancel()
-        searchResults = []
-        isLoading = true
-        hasSearched = true
-    }
-    
+
     func performeSearch(text:String, category:Int, completion:@escaping SearchComplete){
         if !text.isEmpty{
-            prepareSearch()
+            dataTask?.cancel()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            state = .loading
             
             let url = iTunesUrl(searchText:text, category:category)
             let session = URLSession.shared
             dataTask = session.dataTask(with: url, completionHandler: {
                 data, response, error in
+                self.state = .notSearchedYet
                 var success = false
                 if let error = error as NSError?, error.code == -999{
                     return
                 }
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200{
                     if let data = data, let jsonDictionary = self.parseJson(data: data){
-                        self.searchResults = self.parseDict(dict: jsonDictionary)
-                        self.searchResults.sort(by: <)
-                        self.isLoading = false
+                        var searchResults = self.parseDict(dict: jsonDictionary)
+                        if searchResults.isEmpty{
+                            self.state = .noResults
+                        }else{
+                            searchResults.sort(by: <)
+                            self.state = .results(searchResults)
+                        }
                         success = true
                     }
                 }
-                if !success{
-                    self.hasSearched = false
-                    self.isLoading = false
-                }
-                
+
                 DispatchQueue.main.async {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                     completion(success)
                 }
             })

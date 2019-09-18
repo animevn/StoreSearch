@@ -73,7 +73,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-634" y="31"/>
+            <point key="canvasLocation" x="-439" y="-9"/>
         </scene>
         <!--Pop-up View-->
         <scene sceneID="PXs-5O-OSq">
@@ -84,7 +84,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iPw-xw-A7S">
-                                <rect key="frame" x="20" y="11" width="528" height="298.5"/>
+                                <rect key="frame" x="20" y="14" width="528" height="292.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L0f-yO-YpR" userLabel="Close Button">
                                         <rect key="frame" x="8" y="8" width="25" height="25"/>
@@ -133,7 +133,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="StF-5q-qeL">
-                                        <rect key="frame" x="448" y="259.5" width="65" height="24"/>
+                                        <rect key="frame" x="448" y="259.5" width="65" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="GUB-6U-TjK"/>
                                         </constraints>
@@ -199,7 +199,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CvS-8M-l4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="281" y="31"/>
+            <point key="canvasLocation" x="292" y="41"/>
         </scene>
         <!--Landscape View Controller-->
         <scene sceneID="rim-su-j8c">
@@ -214,6 +214,9 @@
                             </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="UF4-UU-Abb">
                                 <rect key="frame" x="20" y="20" width="39" height="37"/>
+                                <connections>
+                                    <action selector="onPageChanged:" destination="xwi-hZ-rSy" eventType="valueChanged" id="eoj-CC-ynI"/>
+                                </connections>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -230,15 +233,19 @@
                     <connections>
                         <outlet property="pgLandscape" destination="UF4-UU-Abb" id="Wqt-bk-yKl"/>
                         <outlet property="svLandscape" destination="Psr-pi-FL6" id="6Kc-mO-nfP"/>
+                        <segue destination="QXh-5d-a9u" kind="presentation" identifier="landscapeDetail" id="UeL-ID-PNk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDZ-2V-tok" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-636" y="754"/>
+            <point key="canvasLocation" x="-439" y="1080"/>
         </scene>
     </scenes>
     <resources>
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="UeL-ID-PNk"/>
+    </inferredMetricsTieBreakers>
 </document>

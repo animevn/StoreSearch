@@ -63,6 +63,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F10723BC23323BA500E69330 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F1C2754F232EFC51005F7387 /* Main.storyboard */,
+				F1C27554232EFC52005F7387 /* Launch.storyboard */,
+				F18C76A2232F495000B01A9E /* SearchResultCell.xib */,
+				F1029505232F58610085A335 /* NothingCell.xib */,
+				F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F10723BD23323BD800E69330 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F1C2754B232EFC51005F7387 /* AppDelegate.swift */,
+				F1C2754D232EFC51005F7387 /* SearchVC.swift */,
+				F1DBCDB52331B1FF0027A730 /* LandscapeVC.swift */,
+				F197E43E23310EF400DCBCF5 /* DetailVC.swift */,
+				F197E4402331186800DCBCF5 /* DimmingPC.swift */,
+				F1386BF32331C8C900DE3958 /* BounceAnimVC.swift */,
+				F1386BF52331CBE400DE3958 /* SlideOutAC.swift */,
+				F1386BF72331DFC500DE3958 /* FadeOutAC.swift */,
+				F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */,
+				F1386BF12331BF1D00DE3958 /* GradientView.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F10723BE23323C2800E69330 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F10723BA233231AE00E69330 /* Search.swift */,
+				F18C76A0232F273500B01A9E /* SearchResult.swift */,
+				F18D1AF12330C14000581932 /* Repo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F1C2753F232EFC51005F7387 = {
 			isa = PBXGroup;
 			children = (
@@ -82,24 +121,9 @@
 		F1C2754A232EFC51005F7387 /* Store Search */ = {
 			isa = PBXGroup;
 			children = (
-				F1C2754B232EFC51005F7387 /* AppDelegate.swift */,
-				F1C2754D232EFC51005F7387 /* SearchVC.swift */,
-				F1DBCDB52331B1FF0027A730 /* LandscapeVC.swift */,
-				F197E43E23310EF400DCBCF5 /* DetailVC.swift */,
-				F197E4402331186800DCBCF5 /* DimmingPC.swift */,
-				F1386BF32331C8C900DE3958 /* BounceAnimVC.swift */,
-				F1386BF52331CBE400DE3958 /* SlideOutAC.swift */,
-				F1386BF72331DFC500DE3958 /* FadeOutAC.swift */,
-				F1386BF12331BF1D00DE3958 /* GradientView.swift */,
-				F18C76A4232F4DAE00B01A9E /* SearchResultCell.swift */,
-				F18C76A2232F495000B01A9E /* SearchResultCell.xib */,
-				F1029505232F58610085A335 /* NothingCell.xib */,
-				F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */,
-				F10723BA233231AE00E69330 /* Search.swift */,
-				F18C76A0232F273500B01A9E /* SearchResult.swift */,
-				F18D1AF12330C14000581932 /* Repo.swift */,
-				F1C2754F232EFC51005F7387 /* Main.storyboard */,
-				F1C27554232EFC52005F7387 /* Launch.storyboard */,
+				F10723BD23323BD800E69330 /* Controller */,
+				F10723BE23323C2800E69330 /* Model */,
+				F10723BC23323BA500E69330 /* View */,
 				F1C27552232EFC52005F7387 /* Assets.xcassets */,
 				F1C27557232EFC52005F7387 /* Info.plist */,
 			);
