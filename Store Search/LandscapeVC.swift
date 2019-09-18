@@ -5,7 +5,7 @@ class LandscapeViewController:UIViewController{
     @IBOutlet weak var svLandscape: UIScrollView!
     @IBOutlet weak var pgLandscape: UIPageControl!
     
-    var searchResults = [SearchResult]()
+    var search:Search!
     private var firstTime = true
     private var downloadTasks = [URLSessionDownloadTask]()
     
@@ -136,7 +136,7 @@ class LandscapeViewController:UIViewController{
         
         if firstTime{
             firstTime = false
-            tileButtons(searchResults: searchResults)
+            tileButtons(searchResults: search.searchResults)
         }
     }
     

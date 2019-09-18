@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F1029506232F58610085A335 /* NothingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1029505232F58610085A335 /* NothingCell.xib */; };
 		F104CFE9232FECAA003A2CF2 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */; };
+		F10723BB233231AE00E69330 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10723BA233231AE00E69330 /* Search.swift */; };
 		F1386BF22331BF1D00DE3958 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BF12331BF1D00DE3958 /* GradientView.swift */; };
 		F1386BF42331C8C900DE3958 /* BounceAnimVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BF32331C8C900DE3958 /* BounceAnimVC.swift */; };
 		F1386BF62331CBE400DE3958 /* SlideOutAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1386BF52331CBE400DE3958 /* SlideOutAC.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		F1029505232F58610085A335 /* NothingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingCell.xib; sourceTree = "<group>"; };
 		F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		F10723BA233231AE00E69330 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		F1386BF12331BF1D00DE3958 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F1386BF32331C8C900DE3958 /* BounceAnimVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimVC.swift; sourceTree = "<group>"; };
 		F1386BF52331CBE400DE3958 /* SlideOutAC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutAC.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				F18C76A2232F495000B01A9E /* SearchResultCell.xib */,
 				F1029505232F58610085A335 /* NothingCell.xib */,
 				F104CFE8232FECAA003A2CF2 /* LoadingCell.xib */,
+				F10723BA233231AE00E69330 /* Search.swift */,
 				F18C76A0232F273500B01A9E /* SearchResult.swift */,
 				F18D1AF12330C14000581932 /* Repo.swift */,
 				F1C2754F232EFC51005F7387 /* Main.storyboard */,
@@ -177,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F10723BB233231AE00E69330 /* Search.swift in Sources */,
 				F1DBCDB62331B1FF0027A730 /* LandscapeVC.swift in Sources */,
 				F1C2754E232EFC51005F7387 /* SearchVC.swift in Sources */,
 				F18C76A1232F273500B01A9E /* SearchResult.swift in Sources */,
