@@ -15,16 +15,26 @@ class Search{
         case noResults
         case results([SearchResult])
     }
+    
+    enum Category:Int{
+        case all = 0
+        case music = 1
+        case software = 2
+        case ebooks = 3
+        
+        var catetoryName:String{
+            switch self{
+            case .all: return ""
+            case .ebooks: return "ebook"
+            case .music: return "musicTrack"
+            case .software: return "software"
+            }
+        }
+    }
    
     
-    private func iTunesUrl(searchText:String, category:Int) -> URL{
-        let categoryName:String
-        switch category{
-        case 1: categoryName = "musicTrack"
-        case 2: categoryName = "software"
-        case 3: categoryName = "ebook"
-        default: categoryName = ""
-        }
+    private func iTunesUrl(searchText:String, category:Category) -> URL{
+        let categoryName = category.catetoryName
         let escapedSearchText = searchText.addingPercentEncoding(
             withAllowedCharacters: .urlQueryAllowed)!
         let urlString = String(format: stringUrl, escapedSearchText, categoryName)
@@ -150,7 +160,7 @@ class Search{
     }
     
 
-    func performeSearch(text:String, category:Int, completion:@escaping SearchComplete){
+    func performeSearch(text:String, category:Category, completion:@escaping SearchComplete){
         if !text.isEmpty{
             dataTask?.cancel()
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -158,8 +168,7 @@ class Search{
             
             let url = iTunesUrl(searchText:text, category:category)
             let session = URLSession.shared
-            dataTask = session.dataTask(with: url, completionHandler: {
-                data, response, error in
+            dataTask = session.dataTask(with: url, completionHandler: {data, response, error in
                 self.state = .notSearchedYet
                 var success = false
                 if let error = error as NSError?, error.code == -999{
@@ -186,5 +195,4 @@ class Search{
             dataTask?.resume()
         }
     }
-    
 }

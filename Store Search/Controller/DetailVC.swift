@@ -27,6 +27,7 @@ class DetailViewController:UIViewController{
     
     deinit {
         downloadTask?.cancel()
+        print("The class \(type(of: self)) was remove from memory")
     }
     
     private func kindForDisplay(kind: String)->String{

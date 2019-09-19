@@ -6,7 +6,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tvResult: UITableView!
     @IBOutlet weak var scTitles: UISegmentedControl!
     
-    var landScape:LandscapeViewController?
+    var landScapeVC:LandscapeViewController?
     let search = Search()
     
     struct TableViewCellIdentifier{
@@ -35,7 +35,6 @@ class SearchViewController: UIViewController {
         sbSearch.becomeFirstResponder()
         setupSearchCell()
     }
-
 }
 
 extension SearchViewController:UISearchBarDelegate{
@@ -52,16 +51,17 @@ extension SearchViewController:UISearchBarDelegate{
     }
     
     private func performeSearch(){
-        tvResult.reloadData()
-        search.performeSearch(text:sbSearch.text!, category:scTitles.selectedSegmentIndex){
-            if !$0{
-                self.showNetworkError()
+        if let category = Search.Category(rawValue: scTitles.selectedSegmentIndex){
+            search.performeSearch(text:sbSearch.text!, category:category){
+                if !$0{
+                    self.showNetworkError()
+                }
+                self.landScapeVC?.searchResultReceived()
+                self.tvResult.reloadData()
             }
-            self.landScape?.searchResultReceived()
-            self.tvResult.reloadData()
+            tvResult.reloadData()
+            sbSearch.resignFirstResponder()
         }
-        tvResult.reloadData()
-        sbSearch.resignFirstResponder()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -98,7 +98,6 @@ extension SearchViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch search.state{
-        
         case .loading:
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: TableViewCellIdentifier.loadingCell, for: indexPath)
@@ -115,7 +114,8 @@ extension SearchViewController:UITableViewDataSource{
             let searchResult = list[indexPath.row]
             cell.configureCell(searchResult: searchResult)
             return cell
-        default:
+        case .notSearchedYet:
+//            fatalError("Not explained here")
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: TableViewCellIdentifier.loadingCell, for: indexPath)
             let spinner = cell.viewWithTag(99) as! UIActivityIndicatorView
@@ -159,10 +159,10 @@ extension SearchViewController:UITableViewDelegate{
 extension SearchViewController{
     
     private func showLandscape(coordinator: UIViewControllerTransitionCoordinator){
-        guard landScape == nil else {return}
-        landScape = storyboard!.instantiateViewController(
+        guard landScapeVC == nil else {return}
+        landScapeVC = storyboard!.instantiateViewController(
             withIdentifier: "landscapeViewController") as? LandscapeViewController
-        if let controller = landScape{
+        if let controller = landScapeVC{
             controller.search = search
             
             controller.view.frame = view.bounds
@@ -186,7 +186,7 @@ extension SearchViewController{
     }
     
     private func hideLandscape(coordinator: UIViewControllerTransitionCoordinator){
-        if let controller = landScape{
+        if let controller = landScapeVC{
             controller.willMove(toParent: nil)
             coordinator.animate(alongsideTransition: {_ in
                 controller.view.alpha = 0
@@ -196,7 +196,7 @@ extension SearchViewController{
             }, completion: {_ in
                 controller.view.removeFromSuperview()
                 controller.removeFromParent()
-                self.landScape = nil
+                self.landScapeVC = nil
             })
         }
     }

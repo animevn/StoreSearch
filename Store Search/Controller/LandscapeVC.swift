@@ -102,6 +102,8 @@ class LandscapeViewController:UIViewController{
             rows = 4
             width = 92
             
+            
+            
         default:
             break
         }

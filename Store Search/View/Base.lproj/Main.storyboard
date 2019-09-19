@@ -78,6 +78,7 @@
         <!--Pop-up View-->
         <scene sceneID="PXs-5O-OSq">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CvS-8M-l4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="QXh-5d-a9u" userLabel="Pop-up View" customClass="DetailViewController" customModule="Store_Search" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7rz-pO-B45">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
@@ -197,7 +198,6 @@
                         <outlet property="lbPopup" destination="iPw-xw-A7S" id="jMM-zG-dVu"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CvS-8M-l4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="292" y="41"/>
         </scene>
